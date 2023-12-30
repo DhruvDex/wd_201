@@ -2,50 +2,50 @@ const todoList = require("../todo");
 
 const { all, add, markAsComplete, overdue, dueToday, dueLater } = todoList();
 
-describe("TodoList test suites", () => {
-  beforeAll(() => {
+describe("TodoList Test Suites", () => {
+  beforeEach(() => {
     add({
-      title: "Test todo1",
+      title: "Test todo0",
       completed: false,
       dueDate: new Date().toISOString().slice(0, 10),
     });
     add({
-      title: "Test todo1 yesterday",
+      title: "Test todo0 yesterday",
       completed: false,
       dueDate: new Date(new Date().setDate(new Date().getDate() - 1))
         .toISOString()
         .split("T")[0],
     });
     add({
-      title: "Test todo1 tomorrow",
+      title: "Test todo0 tomorrow",
       completed: false,
       dueDate: new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
         .split("T")[0],
     });
   });
-  test("Checks creating a new todo", () => {
+
+  test("Creates a new todo", () => {
     const itemCount = all.length;
-    // expect(all.length).toBe(itemCount)
+   
     add({
-      title: "Test todo2",
+      title: "Test todo1",
       completed: false,
       dueDate: new Date().toISOString().slice(0, 10),
     });
     expect(all.length).toBe(itemCount + 1);
   });
 
-  test("Checkd markinga a todo as complete", () => {
+  test("Checks marking a todo as complete", () => {
     expect(all[0].completed).toBe(false);
     markAsComplete(0);
     expect(all[0].completed).toBe(true);
   });
 
-  test("Checks retrival of overdue items", () => {
+  test("Checks retrieval of overdue items", () => {
     const itemCount = overdue().length;
-    // expect(overdue().length).toBe(itemCount)
     add({
-      title: "Test todo2 yesterday",
+      title: "Test todo1 yesterday",
       completed: false,
       dueDate: new Date(new Date().setDate(new Date().getDate() - 1))
         .toISOString()
@@ -54,22 +54,20 @@ describe("TodoList test suites", () => {
     expect(overdue().length).toBe(itemCount + 1);
   });
 
-  test("Checks retrival of dueToday items", () => {
+  test("Checks retrieval of dueToday items", () => {
     const itemCount = dueToday().length;
-    // expect(dueToday().length).toBe(itemCount)
     add({
-      title: "Test todo3",
+      title: "Test todo2",
       completed: false,
       dueDate: new Date().toISOString().slice(0, 10),
     });
     expect(dueToday().length).toBe(itemCount + 1);
   });
 
-  test("Checks retrival of dueLater items", () => {
+  test("Checks retrieval of dueLater items", () => {
     const itemCount = dueLater().length;
-    // expect(dueLater().length).toBe(itemCount)
     add({
-      title: "Test todo2 tomorrow",
+      title: "Test todo1 tomorrow",
       completed: false,
       dueDate: new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
@@ -78,6 +76,3 @@ describe("TodoList test suites", () => {
     expect(dueLater().length).toBe(itemCount + 1);
   });
 });
-
-
-
